@@ -17,5 +17,6 @@ class Constants {
         const val GET_VERSION_NAME_METHOD = "getVersionName"
         const val UPDATE_METHOD = "update"
         const val CANCEL_METHOD = "cancel"
+        const val INSTALL_APK = "installApk"
     }
 }

@@ -57,15 +57,23 @@ class FlutterAppUpdatePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             Constants.GET_VERSION_CODE_METHOD -> {
                 getVersionCode(result)
             }
+
             Constants.GET_VERSION_NAME_METHOD -> {
                 getVersionName(result)
             }
+
             Constants.UPDATE_METHOD -> {
                 update(call, result)
             }
+
             Constants.CANCEL_METHOD -> {
                 cancel(result)
             }
+
+            Constants.INSTALL_APK -> {
+                installApk(call, result)
+            }
+
             else -> {
                 result.notImplemented()
             }
@@ -81,6 +89,17 @@ class FlutterAppUpdatePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         val packageInfo =
             applicationContext.packageManager.getPackageInfo(applicationContext.packageName, 0)
         result.success(packageInfo.versionName)
+    }
+
+    /**
+     * 安装apk
+     */
+    private fun installApk(call: MethodCall, result: Result) {
+        val apkPath = call.arguments as? String
+        if (!apkPath.isNullOrEmpty()){
+            ApkUtil.installApk(applicationContext,"${applicationContext.packageName}.fileProvider", File(apkPath))
+        }
+        result.success(true)
     }
 
     /**
